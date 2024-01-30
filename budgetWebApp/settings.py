@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'budgetWebApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'budget',
-        'USER': 'postgres',
-        'PASSWORD':313011,
-        'HOST': 'localhost'
+        'ENGINE': '',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD':,
+        'HOST': ''
         
     }
 }
