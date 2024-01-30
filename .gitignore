@@ -1,0 +1,7 @@
+# .gitignore
+
+# Exclude .env file
+.env
+
+# Exclude manage.py file
+manage.py
