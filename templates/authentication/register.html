@@ -1,17 +1,43 @@
-{% extends "base_auth.html" %}
-
-
+{% extends "base_auth.html" %} 
 {% block content %}
 
-<div class = "card">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
 
-<div class = "card-body">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <div class="card-title py-3">
+                        <h4>Register for a free account</h4>
+                    </div>
+                    <form action="" method="post">
 
-<h1>login<h1>
+                        <div class="mb-3">
+                            <label for="usernameField" class="form-label">Username</label>
+                            <input type="text" name="username" id="usernameField" class="form-control" placeholder="Username">
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="emailField" class="form-label">Email</label>
+                            <input type="email" name="email" id="emailField" class="form-control" placeholder="Email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="passwordField" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" name="password" id="passwordField" class="form-control" placeholder="Password">
+                                <button class="btn btn-outline-secondary" type="button" id="showPasswordBtn">Show</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-block btn-primary">Register</button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
-
-
-</div>
 {% endblock %}
