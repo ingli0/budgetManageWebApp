@@ -76,13 +76,12 @@ WSGI_APPLICATION = 'budgetWebApp.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': '',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD':,
-        'HOST': ''
-        
+   'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'budget',
+        'USER': 'postgres',
+        'PASSWORD':313011,
+        'HOST': 'localhost'
     }
 }
 

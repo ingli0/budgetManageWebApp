@@ -1,4 +1,7 @@
 {% extends "base_auth.html" %} 
+
+{% load static  %}
+
 {% block content %}
 
 <div class="container">
@@ -17,8 +20,13 @@
                             <input type="text" name="username" id="usernameField" class="form-control" placeholder="Username">
                         </div>
 
+                        <div class = "invalid-feedback invalid_feedback" style="display:none">
+
+                        </div>
+
                         <div class="mb-3">
                             <label for="emailField" class="form-label">Email</label>
+                            
                             <input type="email" name="email" id="emailField" class="form-control" placeholder="Email">
                         </div>
 
@@ -39,5 +47,7 @@
         </div>
     </div>
 </div>
+
+<script src="{% static 'js/register.js'%}"><script>
 
 {% endblock %}
