@@ -80,3 +80,12 @@
   border: 1px solid red; /* Add your desired styles for invalid state */
 }
 
+
+.showpassWordToggle{
+  cursor: pointer;
+  transition: all;
+}
+
+.showpassWordToggle:hover{
+  transform: scale(1.2);
+}
