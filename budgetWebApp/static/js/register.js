@@ -1,7 +1,7 @@
 const usernameField = document.querySelector("#usernameField");
 const feedBackArea = document.querySelector(".invalid_feedback"); 
 const emailField = document.querySelector("#emailField");
-const passwordField = document.querySelector("#passwordField"); // Corrected selector
+const passwordField = document.querySelector("#passwordField");  
 const emailFeedBackArea = document.querySelector(".emailFeedBackArea");
 const showPasswordBtn = document.querySelector(".showpassWordToggle");
 const usernameSuccessOutput = document.querySelector('.usernameSuccessOutput');
