@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -96,6 +96,30 @@ class RegistrationView(View):
         return render(request,'authentication/register.html')
 
 
+class LoginView(View):
+    def get(self,request,uidb64, token):
+         
+        try:
+            id= force_str(urlsafe_base64_decode(uidb64))
+            user=User.objects.get(pk=id)
+
+
+            if not token_generator.check_token(user, token):
+                return redirect('login'+'?message='+'user already activaded')
+
+            if user.is_active:
+                return redirect('login')
+            user.is_active = True
+            user.save()
+
+            messages.success(request,'Account activated sucessfully')
+
+
+        except Exception as ex:
+            pass
+
+        return redirect('login')
+    
 class VerificationView(View):
     def get(self,request,uidb64, token):
-        return redirect('login')
+        return  render(request,'authentication/register.html')
