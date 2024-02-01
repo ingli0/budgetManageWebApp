@@ -6,6 +6,7 @@ const emailFeedBackArea = document.querySelector(".emailFeedBackArea");
 const showPasswordBtn = document.querySelector(".showpassWordToggle");
 const usernameSuccessOutput = document.querySelector('.usernameSuccessOutput');
 const showpassWordToggle = document.querySelector(".showpassWordToggle");
+const submitBtn = document.querySelector(".submit-btn")
 
 const handleToggleInput = (e) => {
     if (showPasswordBtn.textContent === 'Show') {
@@ -36,9 +37,12 @@ emailField.addEventListener('keyup',(e)=>{
         .then((data) => {
             console.log('data',data);
             if(data.email_error){
+                submitBtn.disabled = true;
                 emailField.classList.add('is-invalid');
                 feedBackArea.style.display="block";
                 emailFeedBackArea.innerHTML=`<p>${data.email_error}</p>`;
+            }else{
+                submitBtn.removeAttribute("disabled");
             }
         });
     }
@@ -68,6 +72,9 @@ usernameField.addEventListener("keyup", (e) => {
                 usernameField.classList.add('is-invalid');
                 feedBackArea.style.display="block";
                 feedBackArea.innerHTML=`<p>${data.username_error}</p>`;
+                submitBtn.disabled=true;
+            }else{
+                submitBtn.removeAttribute("disabled");
             }
         });
     }

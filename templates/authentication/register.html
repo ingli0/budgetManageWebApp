@@ -15,6 +15,8 @@
                     </div>
 
 
+
+
                     <form action="" method="post">
                         {% csrf_token %}
 
@@ -22,7 +24,7 @@
                         {% include "partials/_messages.html" %}
 
                         <div class="mb-3">
-                            <label for="usernameField" class="form-label">Username</label>
+                            <label for="usernameField" class="form-label"  values="{{fieldValues.username}}">Username</label>
                             <input type="text" name="username" id="usernameField" class="form-control" placeholder="Username">
                         </div>
 
@@ -34,7 +36,7 @@
                         <div class="mb-3">
                             <label for="emailField" class="form-label">Email</label>
                             
-                            <input type="email" name="email" id="emailField" class="form-control" placeholder="Email">
+                            <input type="email" name="email" id="emailField" class="form-control" values="{{fieldValues.email}}" placeholder="Email">
                         </div>
 
                         
@@ -51,7 +53,7 @@
                         <div class = "invalid-feedback emailFeedBackArea" style="display:none">
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-primary">Register</button>
+                        <button type="submit" class="btn btn-block btn-primary submit-btn">Register</button>
 
                     </form>
                 </div>

@@ -36,11 +36,31 @@ class RegistrationView(View):
         return render(request,'authentication/register.html')
     
     def post(self,request):
-        messages.success(request,'Success ')
-        messages.warning(request,'warnin ')
-        messages.info(request,'info ')
-        messages.error(request,'error ')
-         
+         #GET USER DATA
+        #VALIDATE 
+        #CREATE USER ACCOUNT
+
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+
+        contetx={
+            'fieldValues':request.POST
+        }
+        if not User.objects.filter(username=username).exists():
+            if not User.objects.filter(email=email).exists():
+
+                if len(password)<8:
+                    messages.error(request,'Password top short')
+                    return render(request,'authentication/register.html',contetx)
+                
+                user=User.objects.create_user(username=username,email=email)
+                user.set_password(password)
+                user.save()
+                messages.success(request,'Account succesfully created')
+                return render(request,'authentication/register.html')
+            
         return render(request,'authentication/register.html')
-    
+
     
