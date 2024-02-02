@@ -96,7 +96,7 @@ class RegistrationView(View):
         return render(request,'authentication/register.html')
 
 
-class LoginView(View):
+class VerificationView(View):
     def get(self,request,uidb64, token):
          
         try:
@@ -120,6 +120,6 @@ class LoginView(View):
 
         return redirect('login')
     
-class VerificationView(View):
+class LoginView(View):
     def get(self,request,uidb64, token):
         return  render(request,'authentication/register.html')
