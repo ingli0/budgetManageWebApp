@@ -13,6 +13,7 @@ from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeErr
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import token_generator
+from django.contrib import auth
 
 # Create your views here.
 
@@ -121,5 +122,39 @@ class VerificationView(View):
         return redirect('login')
     
 class LoginView(View):
-    def get(self,request,uidb64, token):
-        return  render(request,'authentication/register.html')
+    def get(self,request):
+        return  render(request,'authentication/login.html')
+    
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if username and password:
+            user = auth.authenticate(username=username,password=password)
+
+            if user:
+                if user.is_active:
+                    auth.login(request,user)
+                    messages.success(request,'Welcome, '+user.username+' You are logged in')
+
+                    return redirect('managebudget')
+
+                messages.error(request,'Account is not active, please chach your email')
+
+                return render(request,'authentication/login.html')
+            
+            messages.error(request,'Invalid credentials , try again')
+
+            return render(request,'authentication/login.html')
+            
+        messages.error(request,'Please fill all fields')
+
+        return render(request,'authentication/login.html')
+            
+
+
+class LogoutView(View):
+    def post(self,request):
+        auth.logout(request)
+        messages.success(request,'you have been loged out ')
+        return redirect('login')
