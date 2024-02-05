@@ -1,6 +1,24 @@
 {% extends "base.html" %}
 
 
+<div class = "container mt4">
+
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'managebudget'%}">Manage Budget</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Add expenses</li>
+        </ol>
+      </nav>
+
+    <form action="{%url 'managebudget' %}" method="post"></from>
+
+
+
+</div>
+
+
+
 {% block content %}
 
 <h2>manage Budget</h2>
