@@ -14,7 +14,11 @@
     <div class="card p-4">
 
         <div class="card-body">
-            <form action="{%url 'managebudget' %}" method="post">
+            <form action="{%url 'add-managebudget' %}" method="post">
+
+                {%include 'partials/_messages.html'%}
+
+                {% csrf_token %}
 
                 <div class="form-group">
                     <label for="">Amount</label>
