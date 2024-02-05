@@ -1,6 +1,6 @@
 {% extends "base.html" %}{% block content %}
 
-<div clas="container mt-3">
+<div class="container mt-3">
 
        <h5> Preferred Currency</h5>
 
@@ -10,10 +10,10 @@
       <div class="input-group">
         <select  name="currency" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
         
-        {% if user_preferences.currency%}
+        {% if User_Prefence.currency%}
 
 
-        <option name="currency" selected value="{{user_preferences.currency}}">{{user_preferences.currency}}</option>
+        <option name="currency" selected value="{{User_Prefence.currency}}">{{User_Prefence.currency}}</option>
 
         {% endif %}
 
