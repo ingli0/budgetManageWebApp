@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Category,Expense
 # Create your views here.
 from django.contrib import messages 
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 
 @login_required(login_url='/authentication/login')
@@ -10,8 +12,13 @@ def index(request):
     categories=Category.objects.all()
     expenses = Expense.objects.filter(owner=request.user)
 
+    paginator = Paginator(expenses,2)
+    page_number = request.GET.get('page')
+    page_obj = Paginator.get_page(paginator,page_number)
+
     context={
-        "expenses" :expenses
+        "expenses" : expenses,
+        'page_obj':  page_obj
     }
     return render(request,'managebudget/index.html',context)
 
