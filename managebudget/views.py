@@ -47,4 +47,47 @@ def add_managebudget(request):
         return redirect('managebudget')
 
         
-     
+def expense_edit(request,id):
+    expense = Expense.objects.get(pk=id)
+    categories=Category.objects.all()
+
+    context = {
+        'expense':expense,
+        'values':expense,
+        'categories':categories
+    }
+    if request.method=='GET':
+        return render(request,'managebudget/edit-expense.html',context)
+    
+    if request.method=='POST':
+        amount=request.POST['amount']
+
+        if not amount :
+            messages.error(request,'Amount is required')
+            return render(request, 'managebudget/edit-expense.html', context)
+        
+        
+        date=request.POST['expense_date']
+        category=request.POST['category']
+        description=request.POST['description']
+
+        if not description :
+            messages.error(request,'Description is required')
+            return render(request, 'managebudget/edit-expense.html', context)
+        
+        expense.owner=request.user
+        expense.amount=amount
+        expense.date=date
+        expense.category=category
+        expense.description=description
+
+        expense.save()
+        messages.success(request,'Expense Updated succesfully')
+
+        return redirect('managebudget')
+    
+def delete_expense(request,id):
+    expense = Expense.objects.get(pk=id)
+    expense.delete()
+    messages.success(request,'Expense removed')
+    return redirect('managebudget')
