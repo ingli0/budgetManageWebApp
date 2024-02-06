@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import Category,Expense
 # Create your views here.
@@ -8,12 +8,18 @@ from django.contrib import messages
 @login_required(login_url='/authentication/login')
 def index(request):
     categories=Category.objects.all()
-    return render(request,'managebudget/index.html')
+    expenses = Expense.objects.filter(owner=request.user)
+
+    context={
+        "expenses" :expenses
+    }
+    return render(request,'managebudget/index.html',context)
 
 def add_managebudget(request):
     categories = Category.objects.all()
     context={
-            'categories':categories
+            'categories':categories,
+            'values':request.POST
         }
     if request.method == 'GET':
         
@@ -25,6 +31,20 @@ def add_managebudget(request):
         if not amount :
             messages.error(request,'Amount is required')
             return render(request, 'managebudget/add_managebudget.html', context)
+        
+        
+        date=request.POST['expense_date']
+        category=request.POST['category']
+        description=request.POST['description']
+
+        if not description :
+            messages.error(request,'Description is required')
+            return render(request, 'managebudget/add_managebudget.html', context)
+        
+        Expense.objects.create(owner=request.user, amount=amount,date=date,category=category,description=description)
+        messages.success(request,'Expense saved succesfully')
+
+        return redirect('managebudget')
 
         
      

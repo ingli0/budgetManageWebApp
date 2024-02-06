@@ -6,7 +6,7 @@ from django.utils.timezone import now
 class Expense(models.Model):
     amount=models.FloatField()
     date=models.DateField(default=now)
-    descrption = models.TextField()
+    description = models.TextField()
     owner = models.ForeignKey(to=User,on_delete=models.CASCADE)
     category = models.CharField(max_length=256)
 
@@ -14,8 +14,8 @@ class Expense(models.Model):
         return self.category
     
     class Meta:
-        ordering:['-date']
-
+        ordering=['-date']
+        
 class Category(models.Model):
     name =models.CharField(max_length=255)
 
