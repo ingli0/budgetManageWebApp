@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 import json
+from userpreferences.models import UserPrefence
 from django.http import JsonResponse
 
 def search_expenses(request):
@@ -22,9 +23,6 @@ def search_expenses(request):
         return JsonResponse(list(data),safe=False)
         
 
-
-
-
 @login_required(login_url='/authentication/login')
 def index(request):
     categories=Category.objects.all()
@@ -33,10 +31,12 @@ def index(request):
     paginator = Paginator(expenses,2)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator,page_number)
+    curency=UserPrefence.objects.get(user=request.user).currency
 
     context={
         "expenses" : expenses,
-        'page_obj':  page_obj
+        'page_obj':  page_obj,
+        "Currancy" : curency
     }
     return render(request,'managebudget/index.html',context)
 
