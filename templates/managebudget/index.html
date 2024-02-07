@@ -29,7 +29,7 @@
             </div>
         </div>
         
-
+    <div class="app-table">
         <table class="table table-stripped table-hover">
             <thead>
                 <tr>
@@ -54,8 +54,30 @@
                 {% endfor %}
             </tbody>
         </table>
-
+    </div>
   
+
+        <div class="table-output">
+            <table class="table table-stripped table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                   
+                   
+                 
+                </tbody>
+            </table>
+
+        </div>
+
+
             <div class="pagination-container">
                 <div class="">
                 Showing page {{page_obj.number}} of {{ page_obj.paginator.num_pages }}
@@ -77,8 +99,6 @@
         </div>
 </div>
 
-<script src="js/searchExpenses.js">
-
-</script>
+<script src="{% static 'js/searchExpenses.js' %}"></script>
 
 {% endblock content %}
