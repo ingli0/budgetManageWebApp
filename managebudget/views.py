@@ -40,6 +40,7 @@ def index(request):
     }
     return render(request,'managebudget/index.html',context)
 
+@login_required(login_url='/authentication/login')
 def add_managebudget(request):
     categories = Category.objects.all()
     context={
