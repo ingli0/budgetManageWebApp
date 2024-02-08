@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'managebudget',
-    'userpreferences']
+    'userpreferences',
+    'userincome'
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
