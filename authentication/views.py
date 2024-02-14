@@ -174,14 +174,15 @@ class RequestPasswordResetEmail(View):
             return render(request, 'authentication/reset-password.html', context)
 
         current_site = get_current_site(request)
-        user = User.objects.filter(email=email)
+        user_qs = User.objects.filter(email=email)
 
-        if user.exists():
+        if user_qs.exists():
+            user = user_qs.first()  # Accessing the first user object from the queryset
             email_contents = {
-                'user': user[0],
+                'user': user,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user[0].pk)),
-                'token': PasswordResetTokenGenerator().make_token(user[0]),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': PasswordResetTokenGenerator().make_token(user),
             }
 
             link = reverse('reset-user-password', kwargs={
@@ -192,7 +193,7 @@ class RequestPasswordResetEmail(View):
 
             email = EmailMessage(
                 email_subject,
-                'Hi there, please click the link below to reset your password\n' + reset_url,
+                'Hi '+ user.username + ', please click the link below to reset your password\n' + reset_url,
                 "noreply@semycolon.com",
                 [email],
             )
@@ -203,56 +204,58 @@ class RequestPasswordResetEmail(View):
         
         messages.error(request, "Email does not exist")
         return render(request, 'authentication/reset-password.html', context)
-   
+  
     
 
 
 
 class CompletePasswordReset(View):
     def get(self, request, uidb64, token):
+        
         context = {
             'uidb64': uidb64,
             'token': token
         }
-        return render(request, 'authentication/set-new-password.html', context)
+
+        try: 
+            user_id=force_str(urlsafe_base64_decode(uidb64))
+            user=User.objects.get(pk=user_id)
+            if not  PasswordResetTokenGenerator().check_token(user, token):
+                messages.info(request,'password link ins invalid, please request a new one')
+                return render(request, 'authentication/reset-password.html', context)
+        except Exception as identifier:
+            pass
 
     def post(self, request, uidb64, token):
         context = {
             'uidb64': uidb64,
             'token': token
         }
-        password = request.POST.get('password')
-        password2 = request.POST.get('password2')
+         
+        
+        password=request.POST['password']
+        password2=request.POST['password2']
 
         if password != password2:
-            messages.error(request, 'Passwords do not match')
+            messages.error(request,'Password does not match')
             return render(request, 'authentication/set-new-password.html', context)
-
-        try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-
-        if user is not None and default_token_generator.check_token(user, token):
+        
+        if len(password)<6:
+            messages.error(request,'Password to short')
+            return render(request, 'authentication/set-new-password.html', context)
+        
+        try: 
+            user_id=force_str(urlsafe_base64_decode(uidb64))
+            user=User.objects.get(pk=user_id)
             user.set_password(password)
-            user.save()
-            messages.success(request, 'Password reset successfully')
+            user.save() 
+            
+            messages.success(request,'Password reset successfull, ypu can login with the new password   ')
             return redirect('login')
-        else:
-            messages.error(request, 'Invalid reset link')
+        except Exception as identifier:
+            messages.info(request,'something went wrong,try again')
             return render(request, 'authentication/set-new-password.html', context)
-    def get(self,request,uidb64,token):
+        
 
-        context={
-            'uidb64':uidb64,
-            'token':token
-        }
-        return render(request,'authentication/set-new-password.html',context)
-    
-    def post(self,request,uidb64,token):
-        context={
-            'uidb64':uidb64,
-            'token':token
-        }
-        return render(request,'authentication/set-new-password.html',context)
+
+        #return render(request, 'authentication/set-new-password.html', context)
