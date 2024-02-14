@@ -14,6 +14,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import token_generator
 from django.contrib import auth
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 # Create your views here.
 
@@ -164,6 +165,46 @@ class RequestPasswordResetEmail(View):
         return render(request,'authentication/resert-password.html')
 
     def post(self,request):
-        return render(request,'authentication/resert-password.html')
+
+        email=request.POST['email']
+
+        context = {
+            'values':request.POST
+        }
+
+        if not validate_email(email):
+            messages.error(request,'Please supply a valid email')
+            return render(request,'authentication/resert-password.html',context)
+
+        current_site = get_current_site(request)
+
+        user=request.objects.filter(email=email)
+
+        if user.exists():
+             email_contents = {
+                 'user':user[0],
+                 'domain':current_site.domain,
+                 'uid':urlsafe_base64_encode(force_bytes(user[0].pk)),
+                 'token':PasswordResetTokenGenerator().make_token(user[0]),
+             }
+
+             link = reverse('reset-user-password', kwargs={
+                 'uidb64':email_contents['uid'], 'token':email_contents['token']})
+             
+             email_subject = "password reset instructions"
+             reset_url = 'https://'+current_site.domain+link
+
+             email = EmailMessage(
+                    email_subject,
+                    'Hi there , please click the link below to reset your password \n '+reset_url,
+                    "noreply@semycolon.com",
+                    [ email], 
+                )
+
+        email.send(fail_silently=False)
+        messages.success(request,"we have sent you an email with the reset link")
+        render(request,'authentication/resert-password.html',context)
+
+       
     
 
