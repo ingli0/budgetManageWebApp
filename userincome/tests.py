@@ -11,6 +11,7 @@ class TestViews(TestCase):
         self.client.login(username='testuser', password='password')
         self.source = Source.objects.create(name='Test Source')
 
+    
 
     def test_add_income_view(self):
         response = self.client.get(reverse('add-income'))

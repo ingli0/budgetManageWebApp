@@ -21,7 +21,7 @@ import threading
 
 # Create your views here.
 
-class   EmailThread(threading.Thread):
+class EmailThread(threading.Thread):
 
     def __init__(self, email):
         self.email = email
