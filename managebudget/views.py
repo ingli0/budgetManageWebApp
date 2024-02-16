@@ -9,6 +9,8 @@ import json
 from userpreferences.models import UserPrefence
 from django.http import JsonResponse
 import datetime
+from collections import defaultdict
+
 
 def search_expenses(request):
     if request.method == 'POST':
@@ -119,33 +121,19 @@ def delete_expense(request,id):
     messages.success(request,'Expense removed')
     return redirect('managebudget')
 
+
 def expense_category_summary(request):
-    todays_date = datetime.date.today()
-    six_month_ago = todays_date-datetime.timedelta(days=30*6)
-    expenses=Expense.objects.filter(owner=request.user,date__gte=six_month_ago,date_lte=todays_date)
-    finalrep={}
+    expenses = Expense.objects.filter(owner=request.user)
 
-    def get_category(expense):
-        return expense.category
-    
-    category_list= list(set(map(get_category,expenses)))
+    finalrep = {}
 
-    def get_expense_category_amount(category):
-        amount =0
-        filtered_by_category=expenses.filter(category=category)
+    for expense in expenses:
+        if expense.category not in finalrep:
+            finalrep[expense.category] = 0
+        finalrep[expense.category] += expense.amount
 
-        for item in filtered_by_category:
-            amount+=item.amount
+    return JsonResponse({'expense_category_data': finalrep})
 
-        return amount
-
-    for x in expenses:
-        for y in category_list:
-            finalrep[y]=get_expense_category_amount()
-
-
-
-    return JsonResponse({'expense_category_data':finalrep},safe=False)
 
 def statsView(request):
     return render(request,'managebudget/stats.html')
