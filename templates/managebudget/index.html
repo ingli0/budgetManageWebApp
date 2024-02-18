@@ -13,13 +13,16 @@
                 </ol>
             </nav>
         </div>  
+        <bl>
         <div class="col-md-2">
             <a href="{% url 'add-managebudget' %}" class="btn btn-primary">Add Expense</a>
         </div>
+        
     </div>
 
     <div class="container">
         {% include "partials/_messages.html" %}{% if expenses.count %}
+        
         <div class="row">  
             <div class="col-md-8"></div>
             <div class="col-md-4">

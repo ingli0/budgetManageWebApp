@@ -102,6 +102,19 @@ def income_edit(request, id):
 
         return redirect('income')
 
+def income_source_summary(request):
+    incomes = UserIncome.objects.filter(owner=request.user)
+    finalrep = {}
+
+    for income in incomes:
+        if income.source not in finalrep:
+            finalrep[income.source] = 0
+        finalrep[income.source] += income.amount
+
+    return JsonResponse({'income_source_data': finalrep})
+def statsViewIncome(request):
+    return render(request,'managebudget/stats_income.html')
+
 
 def delete_income(request, id):
     income = UserIncome.objects.get(pk=id)

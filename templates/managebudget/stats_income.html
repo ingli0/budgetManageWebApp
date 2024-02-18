@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="">Expense Summary</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Summary</li>
+                </ol>
+            </nav>
+        </div>  
+        <bl>
+        <div class="col-md-2 d-flex justify-content-center">
+            <div class="chart-type-buttons">
+                <button onclick="changeChartTypeIncome('bar')" class="btn btn-secondary">Bar</button>
+                <button onclick="changeChartTypeIncome('pie')" class="btn btn-secondary">Pie</button>
+                <button onclick="changeChartTypeIncome('doughnut')" class="btn btn-secondary">Doughnut</button>
+                <button onclick="changeChartTypeIncome('polarArea')" class="btn btn-secondary">Polar</button>
+                <button onclick="changeChartTypeIncome('radar')" class="btn btn-secondary">Radar</button>
+            </div>
+        </div>        
+    </div>
+    
+    <div id="chartContainer">
+        <canvas id="myChart" width="200" height="200"></canvas>
+    </div>
+    
+</div>
+
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<script src="{% static 'js/statsIncome.js' %}"></script>
+
+<style>
+.chart-type-buttons {
+    display: flex;
+    flex-direction: row; /* Align buttons horizontally */
+    justify-content: space-between; /* Distribute space evenly */
+    width: 100%;
+}
+
+.chart-type-buttons button {
+    flex-grow: 1; /* Allow buttons to grow and fill available space */
+    margin-right: 10px; /* Add some spacing between buttons */
+}
+.chart-type-buttons button:last-child {
+    margin-right: 0; /* Remove margin from the last button */
+}
+
+</style>
+
+{% endblock content %}

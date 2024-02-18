@@ -11,13 +11,16 @@ class UserIncome(models.Model):
     source = models.CharField(max_length=256)
 
     def __str__(self) :
-        return self.category
+        return self.source
     
     class Meta:
         ordering=['-date']
         
 class Source(models.Model):
     name =models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name_plural='Sources'
 
     
     def __str__(self) :
