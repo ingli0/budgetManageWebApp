@@ -5,7 +5,9 @@ from django.conf import settings
 from .models import UserPrefence
 from django.contrib import messages
 # Create your views here.
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/authentication/login')
 def index(request):
     currency_data=[]
 

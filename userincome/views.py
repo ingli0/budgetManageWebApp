@@ -101,7 +101,7 @@ def income_edit(request, id):
         messages.success(request, 'Record updated  successfully')
 
         return redirect('income')
-
+@login_required(login_url='/authentication/login')
 def income_source_summary(request):
     incomes = UserIncome.objects.filter(owner=request.user)
     finalrep = {}
@@ -112,10 +112,12 @@ def income_source_summary(request):
         finalrep[income.source] += income.amount
 
     return JsonResponse({'income_source_data': finalrep})
+
+@login_required(login_url='/authentication/login')
 def statsViewIncome(request):
     return render(request,'managebudget/stats_income.html')
 
-
+@login_required(login_url='/authentication/login')
 def delete_income(request, id):
     income = UserIncome.objects.get(pk=id)
     income.delete()

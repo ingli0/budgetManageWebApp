@@ -81,7 +81,7 @@ def add_managebudget(request):
 
         return redirect('managebudget')
 
-        
+@login_required(login_url='/authentication/login')      
 def expense_edit(request,id):
     expense = Expense.objects.get(pk=id)
     categories=Category.objects.all()
@@ -120,14 +120,14 @@ def expense_edit(request,id):
         messages.success(request,'Expense Updated succesfully')
 
         return redirect('managebudget')
-    
+@login_required(login_url='/authentication/login')   
 def delete_expense(request,id):
     expense = Expense.objects.get(pk=id)
     expense.delete()
     messages.success(request,'Expense removed')
     return redirect('managebudget')
 
-
+@login_required(login_url='/authentication/login')
 def expense_category_summary(request):
     expenses = Expense.objects.filter(owner=request.user)
 
@@ -140,11 +140,11 @@ def expense_category_summary(request):
 
     return JsonResponse({'expense_category_data': finalrep})
 
-
+@login_required(login_url='/authentication/login')
 def statsView(request):
     return render(request,'managebudget/stats.html')
 
-
+@login_required(login_url='/authentication/login')
 def export_csv(request):
     
     response = HttpResponse(content_type='text/csv')
@@ -161,7 +161,7 @@ def export_csv(request):
 
     return response
 
-
+@login_required(login_url='/authentication/login')
 def export_excel(request):
     response=HttpResponse(content_type='application/ms-excel')
 

@@ -1,4 +1,4 @@
-    let myChart;
+let myChart;
 let chartType = 'bar'; // Default chart type
 
 const renderChart = (data, labels, chartType) => {
