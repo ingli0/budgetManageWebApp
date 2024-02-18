@@ -13,9 +13,16 @@
                 </ol>
             </nav>
         </div>  
-        <div class="col-md-2">
-            <a href="" class="btn btn-primary">Back</a>
-        </div>
+        <bl>
+        <div class="col-md-2 d-flex justify-content-center">
+            <div class="chart-type-buttons">
+                <button onclick="changeChartType('bar')" class="btn btn-secondary">Bar</button>
+                <button onclick="changeChartType('pie')" class="btn btn-secondary">Pie</button>
+                <button onclick="changeChartType('doughnut')" class="btn btn-secondary">Doughnut</button>
+                <button onclick="changeChartType('polarArea')" class="btn btn-secondary">Polar</button>
+                <button onclick="changeChartType('radar')" class="btn btn-secondary">Radar</button>
+            </div>
+        </div>        
     </div>
     
     <div id="chartContainer">
@@ -26,4 +33,23 @@
 
 <script src="{% static 'js/Chart.min.js' %}"></script>
 <script src="{% static 'js/stats.js' %}"></script>
+
+<style>
+.chart-type-buttons {
+    display: flex;
+    flex-direction: row; /* Align buttons horizontally */
+    justify-content: space-between; /* Distribute space evenly */
+    width: 100%;
+}
+
+.chart-type-buttons button {
+    flex-grow: 1; /* Allow buttons to grow and fill available space */
+    margin-right: 10px; /* Add some spacing between buttons */
+}
+.chart-type-buttons button:last-child {
+    margin-right: 0; /* Remove margin from the last button */
+}
+
+</style>
+
 {% endblock content %}
