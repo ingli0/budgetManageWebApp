@@ -72,3 +72,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('myChart').style.width = '350px';
     }, 100);
 });
+
+ 
+
+function downloadChart() {
+    var canvas = document.getElementById('myChart');
+    var url = canvas.toDataURL();  
+    var link = document.createElement('a');
+    link.download = 'chart.png';  
+    link.href = url;
+    link.click(); 
+}
+
+ 
+document.getElementById('downloadChart').addEventListener('click', function() {
+    downloadChart();
+});
