@@ -8,7 +8,7 @@
         <div class="col-md-10">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="">Expense Summary</a></li>
+                    <li class="breadcrumb-item"><a href="">Income Summary</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Summary</li>
                 </ol>
             </nav>
@@ -22,8 +22,12 @@
                 <button onclick="changeChartTypeIncome('polarArea')" class="btn btn-secondary">Polar</button>
                 <button onclick="changeChartTypeIncome('radar')" class="btn btn-secondary">Radar</button>
             </div>
-        </div>        
+        </div>    
+        <div class="text-center mt-3">
+            <button id="downloadChartBtn" class="btn btn-primary">Download Chart Image</button>
+        </div>    
     </div>
+
     
     <div id="chartContainer">
         <canvas id="myChart" width="200" height="200"></canvas>

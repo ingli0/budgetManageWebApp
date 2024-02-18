@@ -68,3 +68,23 @@ const changeChartTypeIncome = (type) => {
     chartType = type;
     getChartDataIncome();
 }
+
+
+const downloadChartImage = () => {
+    
+    const canvas = document.getElementById('myChart');
+    
+    const dataUrl = canvas.toDataURL('image/png');
+    
+    const link = document.createElement('a');
+    link.download = 'chart.png';  
+    link.href = dataUrl; 
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
+document.getElementById('downloadChartBtn').addEventListener('click', downloadChartImage);
+
+
