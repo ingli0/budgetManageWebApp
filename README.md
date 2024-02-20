@@ -16,4 +16,6 @@ budgetManage is a Django project designed to help users manage their budget effe
 - Charts:
   - Visual representation of expenses and incomes through charts, providing users with insights into their financial data.
 
+![chart (6)](https://github.com/ingli0/budgetManageWebApp/assets/76855285/f2a8864b-c828-4c14-a74a-a9963f31de93)
+
 
