@@ -36,3 +36,6 @@ def index(request):
             UserPrefence.objects.create(user=request.user, currency=currency)
     messages.success(request, 'Changes saved')
     return render(request,'preferences/index.html',{'currencies':currency_data,'User_Prefence':User_Prefence})
+
+def general(request):
+    return render(request,'preferences/general.html')
